@@ -35,13 +35,16 @@ namespace EncuestaApp
                 // Abrir la conexión
                 connection.Open();
 
+                // Obtener el PartidoId del partido político ingresado
+                int partidoId = ObtenerPartidoId(connection, partido);
+
                 // Insertar la encuesta en la base de datos
-                using (SqlCommand cmd = new SqlCommand("INSERT INTO Encuestas (Nombre, Edad, CorreoElectronico, PartidoPolitico) VALUES (@Nombre, @Edad, @Correo, @Partido)", connection))
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO Encuestas (Nombre, Edad, CorreoElectronico, PartidoPoliticoId) VALUES (@Nombre, @Edad, @Correo, @PartidoId)", connection))
                 {
                     cmd.Parameters.AddWithValue("@Nombre", nombre);
                     cmd.Parameters.AddWithValue("@Edad", edad);
                     cmd.Parameters.AddWithValue("@Correo", correo);
-                    cmd.Parameters.AddWithValue("@Partido", partido);
+                    cmd.Parameters.AddWithValue("@PartidoId", partidoId);
 
                     cmd.ExecuteNonQuery();
                 }
@@ -71,6 +74,16 @@ namespace EncuestaApp
         static bool ValidarPartidoPolitico(string partido)
         {
             return partido == "PLN" || partido == "PUSC" || partido == "PAC";
+        }
+
+        // Método para obtener el PartidoId de la tabla PartidosPoliticos
+        static int ObtenerPartidoId(SqlConnection connection, string partidoNombre)
+        {
+            using (SqlCommand cmd = new SqlCommand("SELECT PartidoId FROM PartidosPoliticos WHERE Nombre = @PartidoNombre", connection))
+            {
+                cmd.Parameters.AddWithValue("@PartidoNombre", partidoNombre);
+                return (int)cmd.ExecuteScalar();
+            }
         }
     }
 }
