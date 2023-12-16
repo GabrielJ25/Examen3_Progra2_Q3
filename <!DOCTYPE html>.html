@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Encuesta Política</title>
+</head>
+<body>
+    <h1>Encuesta Política</h1>
+    <form action="procesar_encuesta.php" method="post">
+        <label for="nombre">Nombre:</label>
+        <input type="text" name="nombre" required><br>
+
+        <label for="edad">Edad:</label>
+        <input type="number" name="edad" required><br>
+
+        <label for="correo">Correo Electrónico:</label>
+        <input type="email" name="correo" required><br>
+
+        <label for="partido">Partido Político:</label>
+        <select name="partido" required>
+            <option value="PLN">PLN</option>
+            <option value="PUSC">PUSC</option>
+            <option value="PAC">PAC</option>
+        </select><br>
+
+        <input type="submit" value="Enviar Encuesta">
+    </form>
+</body>
+</html>
